@@ -222,3 +222,262 @@ testPartA_POLY_STATE: aPolynom
 	| p_dic |
 	p_dic := aPolynom asDictionary.
 	((p_dic occurrencesOf 0) = 0) ifFalse [^false] ifTrue [^true].
+	
+testPartA_POLY_MULTIPLYBYMONOM
+	|p p2 p_dic m currect_res|	
+	
+	m := Monom new.
+	p:= Polynom new.
+	
+	m exp: 2. m coef: 2.
+	p addMonom: m.
+	m exp: 3. m coef: 4.
+	p addMonom: m.
+	
+	m exp: 5. m coef: 0.
+	p := p multiplyByMonom: m.
+	currect_res := Dictionary new.
+	p_dic = p asDictionary.
+	self assert: (p_dic = currect_res).
+	
+"****************************************************************"
+
+	m := Monom new.
+	p:= Polynom new.
+	
+	m exp: 2. m coef: -2.
+	p := p multiplyByMonom: m.
+	currect_res := Dictionary new.
+	p_dic = p asDictionary.
+	self assert: (p_dic = currect_res).
+
+"****************************************************************"
+	
+	m := Monom new.
+	p:= Polynom new.
+	
+	m exp: 2. m coef: 2.
+	p addMonom: m.
+	
+	m exp: 2. m coef: -2.
+	p := p multiplyByMonom: m.
+	currect_res := Dictionary new.
+	currect_res at: 4 put: -4.
+	
+	p_dic = p asDictionary.
+	self assert: (p_dic = currect_res).
+	
+"****************************************************************"
+	
+	m := Monom new.
+	p:= Polynom new.
+	p2:= Polynom new.
+	
+	m exp: 2. m coef: 2.
+	p addMonom: m.
+	p2 addMonom: m.
+	
+	m exp: 3. m coef: 4.
+	p addMonom: m.
+	p2 addMonom: m.
+	
+	[p multiplyByMonom: p2] on: Error 
+	do: [:e | (e asString = 'Error: invalid input' ifFalse: [Transcript showln: e asString])].
+	
+"****************************************************************"
+	
+	m := Monom new.
+	p:= Polynom new.
+	
+	m exp: 2. m coef: 2.
+	p addMonom: m.
+	m exp: 3. m coef: 4.
+	p addMonom: m.
+	
+	p := p multiplyByMonom: m.
+	p_dic = p asDictionary.
+	
+	currect_res := Dictionary new.
+	currect_res at: 2 put: 2.
+	currect_res at: 3 put: 4.
+	
+	self assert: (p_dic = currect_res).
+	m exp: 9. m coef: 10.
+	self assert: (p_dic = currect_res).
+	
+"****************************************************************"
+	
+	m := Monom new.
+	p:= Polynom new.
+	
+	m exp: 2. m coef: 2.
+	p addMonom: m.
+	
+	[p multiplyByMonom: (0.5)] on: Error 
+	do: [:e | (e asString = 'Error: invalid input' ifFalse: [Transcript showln: e asString])].
+
+testPartA_POLY_ASDICTIONARY
+	|p p2 p_dic m currect_res|	
+	
+	p:= Polynom new.
+	
+	p_dic := p asDictionary.
+	self assert: (p_dic = Dictionary new).
+	
+"****************************************************************"
+"****************************************************************"
+	
+	p := Polynom new.
+	m := Monom new.
+	m exp: 3. m coef: 1.
+	p addMonom: m.
+	p_dic = p asDictionary.
+	
+	currect_res := Dictionary new.
+	currect_res at: 3 put: 1.
+	
+	self assert: (p_dic = currect_res).
+	
+"****************************************************************"
+"****************************************************************"
+	
+	p := Polynom new.
+	m := Monom new.
+	
+	m exp: 0. m coef: 3.
+	p addMonom: m.
+	m exp: 4. m coef: 3.
+	p addMonom: m.
+	p_dic = p asDictionary.
+	
+	currect_res := Dictionary new.
+	currect_res at: 0 put: 3.
+	currect_res at: 4 put: 3.
+	
+	self assert: (p_dic = currect_res).
+
+"****************************************************************"
+"****************************************************************"
+
+	p := Polynom new.
+	m := Monom new.
+	
+	m exp: 0. m coef: 0.
+	p addMonom: m.
+	m exp: 1. m coef: 0.
+	p addMonom: m.
+	m exp: 2. m coef: 0.
+	p addMonom: m.
+	m exp: 3. m coef: 0.
+	p addMonom: m.
+	p_dic = p asDictionary.
+	
+	self assert: (p_dic = Dictionary new).
+
+testPartA_POLY_DERIVATIVE
+	|p p2 p_dic m currect_res|
+	
+	p := Polynom new.
+	m := Monom new.
+	m exp: 0. m coef: 3.
+	p addMonom: m.
+	
+	p := p derivative.
+	p_dic := p asDictionary.
+	
+	self assert: (p_dic = Dictionary new).
+
+"================================================================"
+"================================================================"
+
+	p := Polynom new.
+	m := Monom new.
+	m exp: 0. m coef: 3.
+	p addMonom: m.
+	m exp: 3. m coef: 1.
+	p addMonom: m.
+	
+	p := p derivative.
+	p_dic := p asDictionary.
+	
+	currect_res := Dictionary new.
+	currect_res at: 2 put: 3.
+	
+	self assert: (p_dic = currect_res).
+	
+"================================================================"
+"================================================================"
+
+	p := Polynom new.
+	m := Monom new.
+	m exp: 4. m coef: 3.
+	p addMonom: m.
+	m exp: 0. m coef: 3.
+	p addMonom: m.
+	
+	p := p derivative.
+	p_dic := p asDictionary.
+	
+	currect_res := Dictionary new.
+	currect_res at: 3 put: 12.
+	
+	self assert: (p_dic = currect_res).
+
+"================================================================"
+"================================================================"
+
+	p := Polynom new.
+	m := Monom new.
+	m exp: 4. m coef: 3.
+	p addMonom: m.
+	m exp: 5. m coef: 3.
+	p addMonom: m.
+	
+	p := p derivative.
+	p_dic := p asDictionary.
+	
+	currect_res := Dictionary new.
+	currect_res at: 3 put: 12.
+	currect_res at: 4 put: 15.
+	
+	self assert: (p_dic = currect_res).
+
+"================================================================"
+"================================================================"
+
+	p := Polynom new.
+	m := Monom new.
+	m exp: 4. m coef: 3.
+	p addMonom: m.
+	m exp: 5. m coef: -3.
+	p addMonom: m.
+	
+	p := p derivative.
+	p_dic := p asDictionary.
+	
+	currect_res := Dictionary new.
+	currect_res at: 3 put: 12.
+	currect_res at: 4 put: -15.
+	
+	self assert: (p_dic = currect_res).
+	
+"================================================================"
+"================================================================"
+
+	p := Polynom new.
+	m := Monom new.
+	m exp: 4. m coef: 3.
+	p addMonom: m.
+	m exp: 5. m coef: -3.
+	p addMonom: m.
+	
+	p2 := p derivative.
+	p_dic := p2 asDictionary.
+	
+	currect_res := Dictionary new.
+	currect_res at: 3 put: 12.
+	currect_res at: 4 put: -15.
+	
+	self assert: (p_dic = currect_res)
+	p := p derivative.
+	self assert: (p_dic = currect_res)
