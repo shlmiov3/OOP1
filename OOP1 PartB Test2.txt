@@ -1,0 +1,93 @@
+testPartB_ADDCOEF_WITHEXP
+	|ps exp coef|
+	ps := PolyStream new.
+	
+	exp := 2. coef := 0.5.
+	[ps addCoef: coef withExp: exp] on: Error 
+	do: [:e | (e asString = 'Error: invalid input' ifFalse: [Transcript showln: e asString])
+	exp :=-2. coef := 2.
+	[ps addCoef: coef withExp: exp] on: Error 
+	do: [:e | (e asString = 'Error: invalid input' ifFalse: [Transcript showln: e asString])
+	exp := 0.5. coef := 2.
+	[ps addCoef: coef withExp: exp] on: Error 
+	do: [:e | (e asString = 'Error: invalid input' ifFalse: [Transcript showln: e asString])
+	exp := -0.5.
+	[ps addCoef: coef withExp: exp] on: Error 
+	do: [:e | (e asString = 'Error: invalid input' ifFalse: [Transcript showln: e asString])
+	coef := -0.5.
+	[ps addCoef: coef withExp: exp] on: Error 
+	do: [:e | (e asString = 'Error: invalid input' ifFalse: [Transcript showln: e asString])
+	
+	exp := 0. coef := -2.
+	ps addCoef: coef withExp: exp.
+	
+	self assert: ((ps eval: 3) = -2).
+	
+"================================================================"
+"================================================================"
+	
+	ps := PolyStream new.
+	exp := 2.
+	ps addCoef: coef withExp: exp.
+	
+	self assert: ((ps eval: 3) = -18).
+
+"================================================================"
+"================================================================"
+
+	ps := PolyStream new.
+	exp := 2. coef := 2.
+	ps addCoef: coef withExp: exp.
+	
+	coef := 3. 
+	ps addCoef: coef withExp: exp.
+	
+	self assert: ((ps eval: 3) = 45).
+	
+"================================================================"
+"================================================================"
+	
+	ps := PolyStream new.
+	exp := 2. coef := 2.
+	ps addCoef: coef withExp: exp.
+	
+	exp := 3. coef := -3. 
+	ps addCoef: coef withExp: exp.
+	
+	self assert: ((ps eval: 3) = -63).
+	
+"================================================================"
+"================================================================"
+
+	ps := PolyStream new.
+	exp := 0. coef := 2.
+	ps addCoef: coef withExp: exp.
+	
+	exp := 3. coef := -3. 
+	ps addCoef: coef withExp: exp.
+	
+	self assert: ((ps eval: 3) = -79).
+	
+"================================================================"
+"================================================================"
+
+	ps := PolyStream new.
+	exp := 2. coef := 2.
+	ps addCoef: coef withExp: exp.
+	
+	exp := 3. coef := 0. 
+	ps addCoef: coef withExp: exp.
+	
+	self assert: ((ps eval: 3) = 18).
+	
+"================================================================"
+"================================================================"
+
+	ps := PolyStream new.
+	exp := 2. coef := 0.
+	ps addCoef: coef withExp: exp.
+	
+	exp := 3. coef := 0. 
+	ps addCoef: coef withExp: exp.
+	
+	self assert: ((ps eval: 3) = 0).
