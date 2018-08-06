@@ -217,3 +217,8 @@ testPartA_POLY_ADDMONOM
 	
 	p_dic := p asDictionary.
 	self assert: (p_dic = currect_res).
+	
+testPartA_POLY_STATE: aPolynom
+	| p_dic |
+	p_dic := aPolynom asDictionary.
+	((p_dic occurrencesOf 0) = 0) ifFalse [^false] ifTrue [^true].
